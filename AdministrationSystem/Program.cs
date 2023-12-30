@@ -1,7 +1,13 @@
+using AdministrationSystem.Data;
+using AdministrationSystem.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<FirebaseConnection>();
+builder.Services.AddSingleton<Users>();
 
 var app = builder.Build();
 
