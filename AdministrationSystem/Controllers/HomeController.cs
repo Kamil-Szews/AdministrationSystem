@@ -8,8 +8,8 @@ namespace AdministrationSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly Users users;
+        #region Constructors
+        
         public HomeController
         (
             ILogger<HomeController> logger,
@@ -20,9 +20,22 @@ namespace AdministrationSystem.Controllers
             this.users = users;
         }
 
+        #endregion
+
+        #region Properties
+        
+        private readonly ILogger<HomeController> _logger;
+        private readonly Users users;
+
+        #endregion
+
         public IActionResult Index()
         {
-            users.AddUser("Kamil", "Szews", "kamilszews123@gmail.com", "606808017", "Suchy Las", "15:00");
+            User user = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "15:00");
+            User user1 = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "15:00", "-NmxA4LcdTBCikORM7ju");
+            //        users.AddUser(user); 
+            //        users.DeleteUser(user1);
+            users.GetAllUsers();
             return View();
         }
 
