@@ -57,9 +57,9 @@ namespace AdministrationSystem.Models
             string email = (string)obj["Email"];
             string phone = (string)obj["Phone"];
             string group = (string)obj["Group"];
-            User user = new User(name, surname, email, phone, group.Substring(0,group.IndexOf(' ')), 
-                group.Substring(group.IndexOf(' ') + 1), Id);
-
+            User user = new User(name, surname, email, phone, group.Substring(0,group.IndexOf(' ')),
+                group.Substring(group.IndexOf(' ', group.IndexOf(' ') + 1) + 1), Id);
+                
             return user;
         }
 

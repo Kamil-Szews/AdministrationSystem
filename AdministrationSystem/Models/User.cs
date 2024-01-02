@@ -13,6 +13,7 @@
             string Email,
             string Phone,
             string Location,
+            string Day,
             string Time
         )
         {
@@ -21,30 +22,33 @@
             this.Email = Email;
             this.Phone = Phone;
             this.Location = Location;
+            this.Day = Day;
             this.Time = Time;
             Id = "";
-            Group = Location + " " + Time;
+            Group = Location + " " + Day + " " + Time;
         }
 
         public User
-       (
-           string Name,
-           string Surname,
-           string Email,
-           string Phone,
-           string Location,
-           string Time,
-           string Id
-       )
+        (
+            string Name,
+            string Surname,
+            string Email,
+            string Phone,
+            string Location,
+            string Day,
+            string Time,
+            string Id
+        )
         {
             this.Name = Name;
             this.Surname = Surname;
             this.Email = Email;
             this.Phone = Phone;
             this.Location = Location;
+            this.Day = Day;
             this.Time = Time;
             this.Id = Id;
-            Group = Location + " " + Time;
+            Group = Location + " " + Day + " " + Time;
         }
 
         #endregion
@@ -57,6 +61,7 @@
         public string Phone { get; set; }
         public string Location { get; set; }
         public string Time { get; set; }
+        public string Day { get; set; }
         public string Group { get; set; }
         public string Id { get; set; }
 

@@ -1,3 +1,4 @@
+using AdministrationSystem.Controllers;
 using AdministrationSystem.Data;
 using AdministrationSystem.Models;
 
@@ -9,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<FirebaseConnection>();
 builder.Services.AddSingleton<Users>();
 builder.Services.AddSingleton<User>();
+builder.Services.AddSingleton<SendEmailController>();
 
 #endregion
 
