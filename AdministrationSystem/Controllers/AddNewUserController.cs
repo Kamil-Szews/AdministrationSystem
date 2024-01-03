@@ -1,10 +1,26 @@
-﻿using AdministrationSystem.ViewModels.AddNewUserViewModel;
+﻿using AdministrationSystem.Models;
+using AdministrationSystem.ViewModels.AddNewUserViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdministrationSystem.Controllers
 {
     public class AddNewUserController : Controller
     {
+        #region Constructors
+
+        public AddNewUserController
+        (
+
+        )
+        {
+
+        }
+
+        #endregion
+
+        #region Properties
+
+        #endregion
         public IActionResult Index()
         {
             var model = new IndexViewModel

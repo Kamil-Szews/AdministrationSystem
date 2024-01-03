@@ -38,7 +38,7 @@ namespace AdministrationSystem.Controllers
 
         public IActionResult AddNewUser()
         {
-            return View(); // "~/Views/AddNewUser/Index.cshtml"
+            return RedirectToAction("Index", "AddNewUser");
         }
 
         public IActionResult AddNewCourse()
