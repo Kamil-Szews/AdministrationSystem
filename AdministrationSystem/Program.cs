@@ -1,6 +1,7 @@
 using AdministrationSystem.Controllers;
 using AdministrationSystem.Data;
 using AdministrationSystem.Models;
+using AdministrationSystem.ViewModels.AddNewUserViewModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSingleton<FirebaseConnection>();
 builder.Services.AddSingleton<Users>();
 builder.Services.AddSingleton<User>();
 builder.Services.AddSingleton<SendEmailController>();
+builder.Services.AddSingleton<IndexViewModel>();
+
 
 #endregion
 

@@ -1,0 +1,26 @@
+﻿@model AdministrationSystem.ViewModels.AddNewUserViewModel.IndexViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Submit" method="post">
+            <div class="form-group">
+                <label asp-for="FirstLabelText"></label>
+                <input asp-for="FirstInputText" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondLabelText"></label>
+                <input asp-for="SecondInputText" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ThirdLabelText"></label>
+                <input asp-for="ThirdInputText" class="form-control" />
+            </div>
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Wyślij</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <!-- Tutaj możesz dodać coś po prawej stronie, np. informacje, inne elementy itp. -->
+    </div>
+</div>

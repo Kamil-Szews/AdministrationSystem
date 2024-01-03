@@ -1,8 +1,5 @@
 ﻿using AdministrationSystem.Models;
-using FireSharp.Config;
-using FireSharp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace AdministrationSystem.Controllers
 {
@@ -31,23 +28,37 @@ namespace AdministrationSystem.Controllers
 
         public IActionResult Index()
         {
-            User user = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "15:00");
-            User user1 = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "15:00", "-NmxA4LcdTBCikORM7ju");
+            //User user = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "Poniedzialek", "15:00");
+            //User user1 = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "Wtorek", "15:00", "-NmxA4LcdTBCikORM7ju");
             //        users.AddUser(user); 
             //        users.DeleteUser(user1);
-            users.GetAllUsers();
+            //users.GetAllUsers();
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult AddNewUser()
+        {
+            return View(); // "~/Views/AddNewUser/Index.cshtml"
+        }
+
+        public IActionResult AddNewCourse()
+        {
+            return RedirectToAction("Index", "AddNewUser");
+        }
+
+        public IActionResult EmailSender()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult GenerateAttendanceList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
+        }
+
+        public IActionResult Podstrona3()
+        {
+            return View();
         }
     }
 }
