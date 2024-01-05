@@ -1,7 +1,7 @@
 using AdministrationSystem.Controllers;
 using AdministrationSystem.Data;
 using AdministrationSystem.Models;
-using AdministrationSystem.ViewModels.AddNewUserViewModel;
+using AdministrationSystem.ViewModels.UsersManagerViewModel;
 
 var builder = WebApplication.CreateBuilder(args);
 

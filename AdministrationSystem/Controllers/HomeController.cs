@@ -33,17 +33,18 @@ namespace AdministrationSystem.Controllers
             //        users.AddUser(user); 
             //        users.DeleteUser(user1);
             //users.GetAllUsers();
+            //var x = users.GetUser("-NnOKgYkm8q7tP_Hia-x");
             return View();
         }
 
-        public IActionResult AddNewUser()
+        public IActionResult UsersManager()
         {
-            return RedirectToAction("Index", "AddNewUser");
+            return RedirectToAction("Index", "UsersManager");
         }
 
         public IActionResult AddNewCourse()
         {
-            return RedirectToAction("Index", "AddNewUser");
+            return RedirectToAction("Index", "UsersManager");
         }
 
         public IActionResult EmailSender()

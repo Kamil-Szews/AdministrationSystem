@@ -1,10 +1,5 @@
 ﻿using AdministrationSystem.Data;
-using Firebase.Auth.Requests;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
-using System.Text.Json;
 
 namespace AdministrationSystem.Models
 {
@@ -56,10 +51,8 @@ namespace AdministrationSystem.Models
             string surname = (string)obj["Surname"];
             string email = (string)obj["Email"];
             string phone = (string)obj["Phone"];
-            string group = (string)obj["Group"];
-            User user = new User(name, surname, email, phone, group.Substring(0,group.IndexOf(' ')),
-                group.Substring(group.IndexOf(' ', group.IndexOf(' ') + 1) + 1), Id);
-                
+            Group group = new Group((string)obj["Group"]);
+            User user = new User(name, surname, email, phone, group.Location, group.Day, group.Time, Id);
             return user;
         }
 
@@ -76,7 +69,7 @@ namespace AdministrationSystem.Models
                     Surname = user.Surname,
                     Email = user.Email,
                     Phone = user.Phone,
-                    Group = user.Group,
+                    Group = user.Group.GroupString(),
                     Id = UserId
                 };
                 client.Set($"Users/{UserId}", newUser);

@@ -1,7 +1,4 @@
 ﻿using AdministrationSystem.Data;
-//using AdministrationSystem.Data.FirebaseConnection;
-using FireSharp.Config;
-using FireSharp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 

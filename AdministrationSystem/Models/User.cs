@@ -8,47 +8,51 @@
 
         public User
         (
-            string Name,
-            string Surname,
-            string Email,
-            string Phone,
-            string Location,
-            string Day,
-            string Time
+            string name,
+            string surname,
+            string email,
+            string phone,
+            string location,
+            string day,
+            string time
         )
         {
-            this.Name = Name;
-            this.Surname = Surname;
-            this.Email = Email;
-            this.Phone = Phone;
-            this.Location = Location;
-            this.Day = Day;
-            this.Time = Time;
+            this.Name = name;
+            this.Surname = surname;
+            this.Email = email;
+            this.Phone = phone;
             Id = "";
-            Group = Location + " " + Day + " " + Time;
+            Group = new Group
+            {
+                Location = location,
+                Day = day,
+                Time = time
+            };
         }
 
         public User
         (
-            string Name,
-            string Surname,
-            string Email,
-            string Phone,
-            string Location,
-            string Day,
-            string Time,
-            string Id
+            string name,
+            string surname,
+            string email,
+            string phone,
+            string location,
+            string day,
+            string time,
+            string id
         )
         {
-            this.Name = Name;
-            this.Surname = Surname;
-            this.Email = Email;
-            this.Phone = Phone;
-            this.Location = Location;
-            this.Day = Day;
-            this.Time = Time;
-            this.Id = Id;
-            Group = Location + " " + Day + " " + Time;
+            this.Name = name;
+            this.Surname = surname;
+            this.Email = email;
+            this.Phone = phone;
+            this.Id = id;
+            Group = Group = new Group
+            {
+                Location = location,
+                Day = day,
+                Time = time
+            };
         }
 
         #endregion
@@ -59,10 +63,7 @@
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Location { get; set; }
-        public string Time { get; set; }
-        public string Day { get; set; }
-        public string Group { get; set; }
+        public Models.Group Group { get; set; }
         public string Id { get; set; }
 
         #endregion
