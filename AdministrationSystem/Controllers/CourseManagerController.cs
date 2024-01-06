@@ -44,7 +44,8 @@ namespace AdministrationSystem.Controllers
                 model.StartingTimeInput,
                 model.EndingTimeInput,
                 model.TeacherInput,
-                model.DescriptionInput
+                model.DescriptionInput,
+                model.MembersCountInput
                 ));
             return RedirectToAction("Index");
         }
@@ -77,7 +78,8 @@ namespace AdministrationSystem.Controllers
                 StartingTime = model.StartingTimeInput != null ? model.StartingTimeInput : null,
                 EndingTime = model.EndingTimeInput != null ? model.EndingTimeInput : null,
                 Teacher = model.TeacherInput != null ? model.TeacherInput : null,
-                Description = model.DescriptionInput != null ? model.DescriptionInput : null
+                Description = model.DescriptionInput != null ? model.DescriptionInput : null,
+                MembersCount = model.MembersCountInput != null ? model.MembersCountInput : null
             };
             courses.ModifyCourse(courseDropdownId, modifiedCourse);
             return RedirectToAction("Index");

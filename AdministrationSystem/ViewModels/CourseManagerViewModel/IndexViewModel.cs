@@ -11,6 +11,7 @@ namespace AdministrationSystem.ViewModels.CourseManagerViewModel
         public string EndingTimeInput { get; set; }
         public string TeacherInput { get; set; }
         public string DescriptionInput { get; set; }
+        public int MembersCountInput { get; set; }
         public List<Course> AllCourses { get; set; }
         public List<string> AllCoursesNames { get; set; }
         public List<string> AllLocationNames { get; set; }

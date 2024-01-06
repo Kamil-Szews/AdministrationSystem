@@ -12,7 +12,8 @@ namespace AdministrationSystem.Models
             string startingTime,
             string endingTime,
             string teacher,
-            string Description
+            string description,
+            int membersCount
             )
         {
             this.Name = name;   
@@ -21,7 +22,8 @@ namespace AdministrationSystem.Models
             this.StartingTime = startingTime;
             this.EndingTime = endingTime;
             this.Teacher = teacher; 
-            this.Description = Description;
+            this.Description = description;
+            this.MembersCount = membersCount;
             Id = "";
             this.Time = StartingTime + " " + EndingTime;
         }
@@ -34,6 +36,7 @@ namespace AdministrationSystem.Models
             string endingTime,
             string teacher,
             string description,
+            int membersCount,
             string id
             )
         {
@@ -44,6 +47,7 @@ namespace AdministrationSystem.Models
             this.EndingTime = endingTime;
             this.Teacher = teacher;
             this.Description = description;
+            this.MembersCount = membersCount;
             this.Id = id;
             this.Time = StartingTime + " " + EndingTime;
         }
@@ -66,12 +70,7 @@ namespace AdministrationSystem.Models
         public string EndingTime { get; set; }
         public string Teacher { get; set; }
         public string Description { get; set; }
+        public int? MembersCount { get; set; }
         public string Id { get; set; }
-
-
-        public string CourseString()
-        {
-            return Location + " " + Day + " " + Time;
-        }
     }
 }

@@ -28,17 +28,22 @@ namespace AdministrationSystem.Models
         {
             var client = firebaseConnection.client();
             var json = client.Get("Courses/");
-            JObject obj = JObject.Parse(json.Body);
-            List<Course> allCourses = new List<Course>();
 
-            foreach (var nextUser in obj)
+            if(json.Body != "null")
             {
-                string Id = nextUser.Key;
-                Course course = GetCourse(Id);
-                allCourses.Add(course);
-            }
+                JObject obj = JObject.Parse(json.Body);
+                List<Course> allCourses = new List<Course>();
 
-            return allCourses;
+                foreach (var nextUser in obj)
+                {
+                    string Id = nextUser.Key;
+                    Course course = GetCourse(Id);
+                    allCourses.Add(course);
+                }
+
+                return allCourses;
+            }
+            return new List<Course>();
         }
 
         public Course GetCourse(string Id)
@@ -53,7 +58,8 @@ namespace AdministrationSystem.Models
             string endingTime = (string)obj["EndingTime"];
             string teacher = (string)obj["Teacher"];
             string description = (string)obj["Description"];
-            Course course = new Course(name, location, day, startingTime, endingTime, teacher, description, Id);
+            int membersCount = (int)obj["MembersCount"];
+            Course course = new Course(name, location, day, startingTime, endingTime, teacher, description, membersCount, Id);
             return course;
         }
 
@@ -71,6 +77,7 @@ namespace AdministrationSystem.Models
                 EndingTime = course.EndingTime,
                 Teacher = course.Teacher,
                 Description = course.Description,
+                MembersCount = course.MembersCount,
                 Id = courseId
             };
             client.Set($"Courses/{courseId}", newCourse);
@@ -87,8 +94,10 @@ namespace AdministrationSystem.Models
             newCourse.EndingTime = newCourse.EndingTime == null ? oldCourse.EndingTime : newCourse.EndingTime;
             newCourse.Teacher = newCourse.Teacher == null ? oldCourse.Teacher : newCourse.Teacher;
             newCourse.Description = newCourse.Description == null ? oldCourse.Description : newCourse.Description;
+            newCourse.MembersCount = newCourse.MembersCount == null ? oldCourse.MembersCount : newCourse.MembersCount;
             client.Set($"Courses/{courseId}", newCourse);
         }
+
         public void DeleteCourse(string courseId)
         {
             var client = firebaseConnection.client();

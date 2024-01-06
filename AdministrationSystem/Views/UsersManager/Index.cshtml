@@ -2,6 +2,33 @@
 
 <div class="row">
     <div class="col-md-4">
+        <form asp-action="SearchCourse" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Search your course</label>
+            </div>
+            <div class="form-group">
+                <label>Course name: </label>
+                <select id="courseDropdownName" name="courseDropdownName">
+                    @foreach (var name in Model.AllCoursesNames)
+                    {
+                        <option value="@name">@name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Location: </label>
+                <select id="courseDropdownLocation" name="courseDropdownLocation">
+                    @foreach (var location in Model.AllLocationNames)
+                    {
+                        <option value="@location">@location</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Search course</button>
+        </form>
         <form asp-action="AddUser" method="post">
             <div class="form-group">
                 <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Add new user to database</label>
@@ -23,9 +50,19 @@
                 <input asp-for="PhoneInputText" class="form-control" />
             </div>
             <div class="form-group">
-                <label>Group</label>
-                <input asp-for="GroupInputText" class="form-control" />
+                <label>Course date: </label>
+                <select id="courseDropdownId" name="courseDropdownId">
+                    @foreach (var course in Model.AllCourses)
+                    {
+                        @if (course.Name == Model.CourseNameInputText && course.Location == Model.LocationInputText)
+                        {
+                            string group = @course.Day + " " + @course.Time;
+                            <option value="@course.Id">@group</option>
+                        }
+                    }
+                </select>
             </div>
+
             <div class="mb-2"></div>
             <div class="mb-2"></div>
             <button type="submit" class="btn btn-primary">Add</button>
@@ -36,12 +73,53 @@
             <div class="form-group">
                 <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Modify user</label>
             </div>
-            <select id="userDropdown" name="userDropdown">
-                @foreach (var user in Model.AllUsers)
-                {
-                    <option value="@user.Name">@user.Name</option>
-                }
-            </select>
+            <div class="form-group">
+                <label>Course date: </label>
+                <select id="courseDropdownUserId" name="courseDropdownUserId">
+                    @if (Model.InputCourses != null)
+                    {
+                        @foreach (var user in Model.AllUsers)
+                        {
+                            @foreach (var course in Model.InputCourses)
+                            {
+                                @if (user.CourseId == course.Id)
+                                {
+                                    string userPresentation = user.Name + " " + user.Surname;
+                                    <option value="@user.Id">@userPresentation</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>New name</label>
+                <input asp-for="NameInputText" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New surname</label>
+                <input asp-for="SurnameInputText" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New email</label>
+                <input asp-for="EmailInputText" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New phone</label>
+                <input asp-for="PhoneInputText" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>New course: </label>
+                <select id="courseDropdownId" name="courseDropdownId">
+                    @foreach (var course in Model.AllCourses)
+                    {
+                        var group = course.Name + " " + course.Location + " " + course.Day + " " + course.Time;
+                        <option value="@course.Id">@group</option>
+                    }
+                </select>
+            </div>
+
             <div class="mb-2"></div>
             <div class="mb-2"></div>
             <button type="submit" class="btn btn-primary">Modify</button>
@@ -53,9 +131,25 @@
                 <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Delete user from database</label>
             </div>
             <div class="form-group">
-                <label>User ID</label>
-                <input asp-for="IdInputText" class="form-control" />
+                <label>User to delete: </label>
+                <select id="courseDropdownUserId" name="courseDropdownUserId">
+                    @if (Model.InputCourses != null)
+                    {
+                        @foreach (var user in Model.AllUsers)
+                        {
+                            @foreach (var course in Model.InputCourses)
+                            {
+                                @if (user.CourseId == course.Id)
+                                {
+                                    string userPresentation = user.Name + " " + user.Surname;
+                                    <option value="@user.Id">@userPresentation</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
             </div>
+            
             <div class="mb-2"></div>
             <div class="mb-2"></div>
             <button type="submit" class="btn btn-primary">Delete</button>

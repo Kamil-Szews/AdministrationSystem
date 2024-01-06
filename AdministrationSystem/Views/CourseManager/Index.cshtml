@@ -34,6 +34,10 @@
                 <label>Description</label>
                 <input asp-for="DescriptionInput" class="form-control" />
             </div>
+            <div class="form-group">
+                <label>Members count</label>
+                <input asp-for="MembersCountInput" class="form-control" />
+            </div>
             
             <div class="mb-2"></div>
             <div class="mb-2"></div>
@@ -45,22 +49,53 @@
             <div class="form-group">
                 <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Search your course</label>
             </div>
-            <select id="courseDropdownName" name="courseDropdownName">
-                @foreach (var name in Model.AllCoursesNames)
-                {
-                    <option value="@name">@name</option>
-                }
-            </select>
-            <select id="courseDropdownLocation" name="courseDropdownLocation">
-                @foreach (var location in Model.AllLocationNames)
-                {
-                    <option value="@location">@location</option>
-                }
-            </select>
+            <div class="form-group">
+                <label>Course name: </label>
+                <select id="courseDropdownName" name="courseDropdownName">
+                    @foreach (var name in Model.AllCoursesNames)
+                    {
+                        <option value="@name">@name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Location: </label>
+                <select id="courseDropdownLocation" name="courseDropdownLocation">
+                    @foreach (var location in Model.AllLocationNames)
+                    {
+                        <option value="@location">@location</option>
+                    }
+                </select>
+            </div>
+           
             <div class="mb-2"></div>
             <div class="mb-2"></div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
+        <form asp-action="DeleteCourse" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Delete course from database</label>
+            </div>
+            <div class="form-group">
+                <label>Course to deleate: </label>
+                <select id="courseDropdownId" name="courseDropdownId">
+                    @foreach (var course in Model.AllCourses)
+                    {
+                        @if (course.Name == Model.NameInput && course.Location == Model.LocationInput)
+                        {
+                            string group = @course.Day + " " + @course.Time;
+                            <option value="@course.Id">@group</option>
+                        }
+                    }
+                </select>
+            </div>
+            
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+    </div>
+    <div class="col-md-4">
         <form asp-action="ModifyCourse" method="post">
             <div class="form-group">
                 <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Modify course</label>
@@ -68,7 +103,7 @@
             <select id="courseDropdownId" name="courseDropdownId">
                 @foreach (var course in Model.AllCourses)
                 {
-                    @if(course.Name == Model.NameInput && course.Location == Model.LocationInput)
+                    @if (course.Name == Model.NameInput && course.Location == Model.LocationInput)
                     {
                         string group = @course.Day + " " + @course.Time;
                         <option value="@course.Id">@group</option>
@@ -103,29 +138,14 @@
                 <label>New description</label>
                 <input asp-for="DescriptionInput" class="form-control" />
             </div>
+            <div class="form-group">
+                <label>New members count</label>
+                <input asp-for="MembersCountInput" class="form-control" />
+            </div>
+
             <div class="mb-2"></div>
             <div class="mb-2"></div>
             <button type="submit" class="btn btn-primary">Modify</button>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <form asp-action="DeleteCourse" method="post">
-            <div class="form-group">
-                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Delete course from database</label>
-            </div>
-            <select id="courseDropdownId" name="courseDropdownId">
-                @foreach (var course in Model.AllCourses)
-                {
-                    @if (course.Name == Model.NameInput && course.Location == Model.LocationInput)
-                    {
-                        string group = @course.Day + " " + @course.Time;
-                        <option value="@course.Id">@group</option>
-                    }
-                }
-            </select>
-            <div class="mb-2"></div>
-            <div class="mb-2"></div>
-            <button type="submit" class="btn btn-primary">Delete</button>
         </form>
     </div>
 </div>
