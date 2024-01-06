@@ -7,10 +7,9 @@ namespace AdministrationSystem.Models
     {
         #region Constructors
 
-        public Users
-        (
+        public Users(
             FirebaseConnection firebaseConnection
-        )
+            )
         {
             this.firebaseConnection = firebaseConnection;
         }
@@ -51,8 +50,8 @@ namespace AdministrationSystem.Models
             string surname = (string)obj["Surname"];
             string email = (string)obj["Email"];
             string phone = (string)obj["Phone"];
-            Group group = new Group((string)obj["Group"]);
-            User user = new User(name, surname, email, phone, group.Location, group.Day, group.Time, Id);
+            Course course = new Course((string)obj["Course"]);
+            User user = new User(name, surname, email, phone, course.Location, course.Day, course.Time, Id);
             return user;
         }
 
@@ -69,7 +68,7 @@ namespace AdministrationSystem.Models
                     Surname = user.Surname,
                     Email = user.Email,
                     Phone = user.Phone,
-                    Group = user.Group.GroupString(),
+                    Course = user.Course.CourseString(),
                     Id = UserId
                 };
                 client.Set($"Users/{UserId}", newUser);

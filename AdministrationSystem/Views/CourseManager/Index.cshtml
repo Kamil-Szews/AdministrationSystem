@@ -1,0 +1,132 @@
+﻿@model AdministrationSystem.ViewModels.CourseManagerViewModel.IndexViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddCourse" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Add new course to database</label>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input asp-for="NameInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input asp-for="LocationInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Day</label>
+                <input asp-for="DayInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Starting time</label>
+                <input asp-for="StartingTimeInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Ending time</label>
+                <input asp-for="EndingTimeInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Teacher</label>
+                <input asp-for="TeacherInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input asp-for="DescriptionInput" class="form-control" />
+            </div>
+            
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form asp-action="SearchCourse" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Search your course</label>
+            </div>
+            <select id="courseDropdownName" name="courseDropdownName">
+                @foreach (var name in Model.AllCoursesNames)
+                {
+                    <option value="@name">@name</option>
+                }
+            </select>
+            <select id="courseDropdownLocation" name="courseDropdownLocation">
+                @foreach (var location in Model.AllLocationNames)
+                {
+                    <option value="@location">@location</option>
+                }
+            </select>
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <form asp-action="ModifyCourse" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Modify course</label>
+            </div>
+            <select id="courseDropdownId" name="courseDropdownId">
+                @foreach (var course in Model.AllCourses)
+                {
+                    @if(course.Name == Model.NameInput && course.Location == Model.LocationInput)
+                    {
+                        string group = @course.Day + " " + @course.Time;
+                        <option value="@course.Id">@group</option>
+                    }
+                }
+            </select>
+            <div class="form-group">
+                <label>New name</label>
+                <input asp-for="NameInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New location</label>
+                <input asp-for="LocationInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New day</label>
+                <input asp-for="DayInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New starting time</label>
+                <input asp-for="StartingTimeInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New ending time</label>
+                <input asp-for="EndingTimeInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New teacher</label>
+                <input asp-for="TeacherInput" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>New description</label>
+                <input asp-for="DescriptionInput" class="form-control" />
+            </div>
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Modify</button>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form asp-action="DeleteCourse" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Delete course from database</label>
+            </div>
+            <select id="courseDropdownId" name="courseDropdownId">
+                @foreach (var course in Model.AllCourses)
+                {
+                    @if (course.Name == Model.NameInput && course.Location == Model.LocationInput)
+                    {
+                        string group = @course.Day + " " + @course.Time;
+                        <option value="@course.Id">@group</option>
+                    }
+                }
+            </select>
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+    </div>
+</div>
+

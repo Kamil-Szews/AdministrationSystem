@@ -10,7 +10,7 @@ namespace AdministrationSystem.Controllers
 
         public UsersManagerController(
             Users users
-        )
+            )
         {
             this.users = users;
         }
@@ -22,11 +22,11 @@ namespace AdministrationSystem.Controllers
         private Users users;
         
         #endregion
+
         public IActionResult Index()
         {
             var model = new IndexViewModel();
-            var AllUsers = users.GetAllUsers();
-            model.AllUsers = AllUsers;
+            model.AllUsers = users.GetAllUsers();
             return View(model);
         }
 

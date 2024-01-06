@@ -7,11 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Services
 
+// Controllers and Views
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<FirebaseConnection>();
+builder.Services.AddSingleton<SendEmailController>();
+
+// Models
 builder.Services.AddSingleton<Users>();
 builder.Services.AddSingleton<User>();
-builder.Services.AddSingleton<SendEmailController>();
+builder.Services.AddSingleton<Courses>();
+builder.Services.AddSingleton<Course>();
+
+// Data
+builder.Services.AddSingleton<FirebaseConnection>();
+
+// ViewModels
 builder.Services.AddSingleton<IndexViewModel>();
 
 

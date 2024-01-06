@@ -1,6 +1,5 @@
 ﻿using FireSharp.Config;
 using FireSharp.Interfaces;
-using Microsoft.Owin.Security.Provider;
 
 namespace AdministrationSystem.Data
 {

@@ -22,7 +22,7 @@
             this.Email = email;
             this.Phone = phone;
             Id = "";
-            Group = new Group
+            Course = new Course
             {
                 Location = location,
                 Day = day,
@@ -47,7 +47,7 @@
             this.Email = email;
             this.Phone = phone;
             this.Id = id;
-            Group = Group = new Group
+            Course = new Course
             {
                 Location = location,
                 Day = day,
@@ -63,7 +63,7 @@
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public Models.Group Group { get; set; }
+        public Models.Course Course { get; set; }
         public string Id { get; set; }
 
         #endregion

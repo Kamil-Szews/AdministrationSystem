@@ -42,22 +42,17 @@ namespace AdministrationSystem.Controllers
             return RedirectToAction("Index", "UsersManager");
         }
 
-        public IActionResult AddNewCourse()
+        public IActionResult CourseManager()
         {
-            return RedirectToAction("Index", "UsersManager");
+            return RedirectToAction("Index", "CourseManager");
         }
 
-        public IActionResult EmailSender()
+        public IActionResult EmailManager()
         {
             return View();
         }
 
         public IActionResult GenerateAttendanceList()
-        {
-            return View();
-        }
-
-        public IActionResult Podstrona3()
         {
             return View();
         }
