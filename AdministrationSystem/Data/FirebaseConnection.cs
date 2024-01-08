@@ -1,5 +1,7 @@
-﻿using FireSharp.Config;
+﻿using Firebase.Storage;
+using FireSharp.Config;
 using FireSharp.Interfaces;
+using FireSharp.Response;
 
 namespace AdministrationSystem.Data
 {
@@ -41,5 +43,9 @@ namespace AdministrationSystem.Data
             return client;
         }
        
+        public void xyz()
+        {
+            var x = new FirebaseStorage("gs://tigerbytes-2ffa5.appspot.com");
+        }
     }
 }

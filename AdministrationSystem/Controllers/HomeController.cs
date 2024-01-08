@@ -1,4 +1,5 @@
 ﻿using AdministrationSystem.Models;
+using AdministrationSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdministrationSystem.Controllers
@@ -10,11 +11,13 @@ namespace AdministrationSystem.Controllers
         public HomeController
         (
             ILogger<HomeController> logger,
-            Users users
+            Users users,
+            PdfGeneratorService pdfGeneratorService
         )
         {
             _logger = logger;
             this.users = users;
+            this.pdfGeneratorService = pdfGeneratorService;
         }
 
         #endregion
@@ -23,6 +26,7 @@ namespace AdministrationSystem.Controllers
         
         private readonly ILogger<HomeController> _logger;
         private readonly Users users;
+        private readonly PdfGeneratorService pdfGeneratorService;
 
         #endregion
 
@@ -34,6 +38,8 @@ namespace AdministrationSystem.Controllers
             //        users.DeleteUser(user1);
             //users.GetAllUsers();
             //var x = users.GetUser("-NnOKgYkm8q7tP_Hia-x");
+            List<User> x = users.GetAllUsers();
+            pdfGeneratorService.pdfAttendanceList(x, "-NnUwgu_NwPY6F8PrIwg");
             return View();
         }
 
@@ -52,7 +58,7 @@ namespace AdministrationSystem.Controllers
             return View();
         }
 
-        public IActionResult GenerateAttendanceList()
+        public IActionResult DocumentManager()
         {
             return View();
         }

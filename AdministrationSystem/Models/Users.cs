@@ -101,7 +101,6 @@ namespace AdministrationSystem.Models
             client.Set($"Users/{userId}", newUser);
         }
 
-
         #endregion
     }
 }

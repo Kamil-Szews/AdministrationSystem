@@ -78,7 +78,7 @@ namespace AdministrationSystem.Controllers
         
 
         [HttpPost]
-        public IActionResult ModifyUser(IndexViewModel model, string courseDropdownId)
+        public IActionResult ModifyUser(IndexViewModel model, string courseDropdownId, string DropdownUserId)
         {
             User newUser = new User()
             {
@@ -88,7 +88,7 @@ namespace AdministrationSystem.Controllers
                 Phone = model.PhoneInputText != null ? model.PhoneInputText : null,
                 CourseId = courseDropdownId
             };
-            users.ModifyUser(courseDropdownId, newUser);
+            users.ModifyUser(DropdownUserId, newUser);
             return RedirectToAction("Index");
         }
         

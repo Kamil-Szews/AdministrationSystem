@@ -2,14 +2,19 @@ using AdministrationSystem.Controllers;
 using AdministrationSystem.Data;
 using AdministrationSystem.Models;
 using AdministrationSystem.ViewModels.UsersManagerViewModel;
+using AdministrationSystem.Services;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Licenses
+QuestPDF.Settings.License = LicenseType.Community;
 
 #region Services
 
 // Controllers and Views
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<SendEmailController>();
+builder.Services.AddSingleton<PdfGeneratorService>();
 
 // Models
 builder.Services.AddSingleton<Users>();
