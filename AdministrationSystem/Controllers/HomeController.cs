@@ -1,4 +1,5 @@
-﻿using AdministrationSystem.Models;
+﻿using AdministrationSystem.Data;
+using AdministrationSystem.Models;
 using AdministrationSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +13,14 @@ namespace AdministrationSystem.Controllers
         (
             ILogger<HomeController> logger,
             Users users,
-            PdfGeneratorService pdfGeneratorService
+            PdfGeneratorService pdfGeneratorService,
+            FirebaseConnection firebaseConnection
         )
         {
             _logger = logger;
             this.users = users;
             this.pdfGeneratorService = pdfGeneratorService;
+            this.firebaseConnection = firebaseConnection;
         }
 
         #endregion
@@ -27,19 +30,14 @@ namespace AdministrationSystem.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly Users users;
         private readonly PdfGeneratorService pdfGeneratorService;
-
+        private readonly FirebaseConnection firebaseConnection;
         #endregion
 
-        public IActionResult Index()
+       public IActionResult Index()
         {
-            //User user = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "Poniedzialek", "15:00");
-            //User user1 = new User("Emilia", "Szews", "emiliaszews123@gmail.com", "69696969", "Suchy_Las", "Wtorek", "15:00", "-NmxA4LcdTBCikORM7ju");
-            //        users.AddUser(user); 
-            //        users.DeleteUser(user1);
-            //users.GetAllUsers();
-            //var x = users.GetUser("-NnOKgYkm8q7tP_Hia-x");
             List<User> x = users.GetAllUsers();
-            pdfGeneratorService.pdfAttendanceList(x, "-NnUwgu_NwPY6F8PrIwg");
+            //var z = pdfGeneratorService.pdfAttendanceList(x, "-NnUwgu_NwPY6F8PrIwg");
+            firebaseConnection.Storage();
             return View();
         }
 
