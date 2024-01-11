@@ -14,13 +14,15 @@ namespace AdministrationSystem.Controllers
             ILogger<HomeController> logger,
             Users users,
             PdfGeneratorService pdfGeneratorService,
-            FirebaseConnection firebaseConnection
+            FirebaseConnection firebaseConnection,
+            Courses courses
         )
         {
             _logger = logger;
             this.users = users;
             this.pdfGeneratorService = pdfGeneratorService;
             this.firebaseConnection = firebaseConnection;
+            this.courses = courses;
         }
 
         #endregion
@@ -29,15 +31,13 @@ namespace AdministrationSystem.Controllers
         
         private readonly ILogger<HomeController> _logger;
         private readonly Users users;
+        private readonly Courses courses;
         private readonly PdfGeneratorService pdfGeneratorService;
         private readonly FirebaseConnection firebaseConnection;
         #endregion
 
        public IActionResult Index()
         {
-            List<User> x = users.GetAllUsers();
-            //var z = pdfGeneratorService.pdfAttendanceList(x, "-NnUwgu_NwPY6F8PrIwg");
-            firebaseConnection.Storage();
             return View();
         }
 
@@ -53,12 +53,12 @@ namespace AdministrationSystem.Controllers
 
         public IActionResult EmailManager()
         {
-            return View();
+            return RedirectToAction("Index", "EmailManager");
         }
 
         public IActionResult DocumentManager()
         {
-            return View();
+            return RedirectToAction("Index", "DocumentManager");
         }
     }
 }

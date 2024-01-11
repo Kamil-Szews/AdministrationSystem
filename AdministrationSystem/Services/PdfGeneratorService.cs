@@ -1,15 +1,9 @@
 ﻿using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Fluent;
-using QuestPDF;
-using QuestPDF.Elements;
-using AdministrationSystem;
-using System.Collections.Generic;
-using QuestPDF.Helpers;
-using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
-using QuestPDF.Previewer;
 using AdministrationSystem.Models;
+using Firebase.Storage;
 
 namespace AdministrationSystem.Services
 {
@@ -22,26 +16,23 @@ namespace AdministrationSystem.Services
 
         private Courses courses;
 
-        public void pdfAttendanceList(List<User> users, string courseId)
+        public MemoryStream pdfAttendanceList(List<User> users, string courseId)
         {
+            var stream = new MemoryStream();
             Course course = courses.GetCourse(courseId);
-            string courseName = course.Name + " " + course.Location + " " + course.Day + " " + course.Time;
-            string currentTime =
-                DateTime.Now.Year.ToString() +
-                DateTime.Now.Month.ToString() +
-                DateTime.Now.Day.ToString() +
-                DateTime.Now.Hour.ToString() +
-                DateTime.Now.Minute.ToString();
+
             Document.Create(container =>
             {
                 container.Page(page =>
                 {
                     page.Margin(2, Unit.Centimetre);
                     page.Size(PageSizes.A4);
-                    page.DefaultTextStyle(text => text.FontSize(20));
+                    page.DefaultTextStyle(text => text.FontSize(14));
 
                     page.Header()
-                        .Text($"Lista obecnosci grupy: {courseName}").FontSize(30).Bold();
+                        .Text($"Lista obecnosci: {course.Name + " " + course.Location + "\n" + course.Day + " " + course.Time}")
+                            .FontSize(22)
+                            .Bold();
 
                     page.Content()
                         .Column(x =>
@@ -56,8 +47,23 @@ namespace AdministrationSystem.Services
                         });
                 });
             })
-                .GeneratePdf("test.pdf");
-            //$"{courseName}_{currentTime}"
+                .GeneratePdf(stream);
+            return stream;
+        }
+
+        public async Task PushFile(MemoryStream stream, Course course)
+        {
+            try
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                FirebaseStorage storage = new FirebaseStorage("tigerbytes-2ffa5.appspot.com", new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult("pyfh6tC0C3KKXhqfnu7T2LKmpt4Ptq6OuzDGQnW7")
+                });
+                var task = storage.Child($"AttendanceLists/{course.Location}/{course.Name}/{course.Day + "_" + course.StartingTime}.pdf").PutAsync(stream);
+                await task;
+            }
+            catch (Exception ex) { }
         }
     }
 }

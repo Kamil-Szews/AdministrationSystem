@@ -1,9 +1,5 @@
-﻿using Firebase.Storage;
-using FireSharp.Config;
+﻿using FireSharp.Config;
 using FireSharp.Interfaces;
-using FireSharp.Response;
-using System.Diagnostics;
-using System.IO;
 
 namespace AdministrationSystem.Data
 {
@@ -43,22 +39,6 @@ namespace AdministrationSystem.Data
             }
             IFirebaseClient client = new FireSharp.FirebaseClient(config());
             return client;
-        }
-       
-        public async Task Storage()
-        {
-            try
-            {
-                var stream = File.Open(@"C:\Users\Dell\Desktop\test.pdf", FileMode.Open);
-                FirebaseStorage storage = new FirebaseStorage("tigerbytes-2ffa5.appspot.com", new FirebaseStorageOptions
-                {
-                    AuthTokenAsyncFactory = () => Task.FromResult(config().AuthSecret)
-                });
-                var task = storage.Child("AttendanceLists/test.pdf").PutAsync(stream);
-                var urlD = await task;
-                Debug.WriteLine(urlD);
-            }
-            catch (Exception ex) { }
         }
     }
 }

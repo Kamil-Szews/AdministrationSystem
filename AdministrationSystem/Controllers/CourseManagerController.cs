@@ -6,8 +6,9 @@ namespace AdministrationSystem.Controllers
 {
     public class CourseManagerController : Controller
     {
-        public CourseManagerController(
-            Courses courses
+        public CourseManagerController
+            (
+                Courses courses
             ) 
         {
             this.courses = courses;
