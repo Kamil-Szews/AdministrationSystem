@@ -39,7 +39,7 @@ namespace AdministrationSystem.Controllers
                 .Distinct()
                 .ToList();
             model.AllUsers = users.GetAllUsers();
-            return View(model);
+            return View("Index", model);
         }
 
         [HttpPost]
@@ -75,7 +75,6 @@ namespace AdministrationSystem.Controllers
                 ));
             return RedirectToAction("Index");
         }
-        
 
         [HttpPost]
         public IActionResult ModifyUser(IndexViewModel model, string courseDropdownId, string DropdownUserId)
@@ -91,14 +90,12 @@ namespace AdministrationSystem.Controllers
             users.ModifyUser(DropdownUserId, newUser);
             return RedirectToAction("Index");
         }
-        
 
         [HttpPost]
-        public IActionResult DeleteUser(IndexViewModel model, string courseDropdownUserId)
+        public IActionResult DeleteUser(string courseDropdownUserId)
         {
             users.DeleteUserFromDatabase(courseDropdownUserId);
             return RedirectToAction("Index");
         }
-
     }
 }

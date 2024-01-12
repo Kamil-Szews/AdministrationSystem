@@ -33,7 +33,7 @@ namespace AdministrationSystem.Models
             string surname = (string)obj["Surname"];
             string email = (string)obj["Email"];
             string phone = (string)obj["Phone"];
-            string courseId = (string)obj["Course"];
+            string courseId = (string)obj["CourseId"];
             User user = new User(name, surname, email, phone, courseId, Id);
             return user;
         }
@@ -72,7 +72,7 @@ namespace AdministrationSystem.Models
                     Surname = user.Surname,
                     Email = user.Email,
                     Phone = user.Phone,
-                    Course = user.CourseId,
+                    CourseId = user.CourseId,
                     Id = UserId
                 };
                 client.Set($"Users/{UserId}", newUser);

@@ -26,27 +26,36 @@ namespace AdministrationSystem.Controllers
         public IActionResult Index()
         {
             var model = new IndexViewModel();
+            model.AllCourses = courses.GetAllCourses();
             return View("Index", model);
         }
 
         [HttpPost]
-        public IActionResult CreateAttedanceList(IndexViewModel indexViewModel)
+        public IActionResult SearchCourse(IndexViewModel model, string courseDropdownId)
         {
-            string CourseIdInput = indexViewModel.CourseIdInput;
-            Course course = courses.GetCourse(CourseIdInput);
-            List<User> usersToAttendanceList = users.GetAllUsers()
-                .Where(user => user.CourseId == CourseIdInput)
+            model.AllCourses = courses.GetAllCourses();
+            model.DropCourseId = courseDropdownId;
+            model.ChoosenUsers = users.GetAllUsers()
+                .Where(user => user.CourseId == courseDropdownId)
                 .ToList();
-            var memoryStream = pdfGeneratorService.pdfAttendanceList(usersToAttendanceList, CourseIdInput);
-            _ = pdfGeneratorService.PushFile(memoryStream, course);
-
-            Response.Clear();
-            Response.ContentType = "application/pdf";
-            Response.Headers.Add("Content-Disposition", "attachment; filename=example.pdf");
-            memoryStream.WriteTo(Response.Body);
-
-            return RedirectToAction("Index");
+            TempData["courseDropdownId"] = courseDropdownId;
+            return View("Index", model);
         }
 
+        [HttpPost]
+        public IActionResult GenerateAttedanceList(IndexViewModel model, List<string> selectedUsers)
+        {
+            string courseDropdownId = TempData["courseDropdownId"] as string;
+            Course course = courses.GetCourse(courseDropdownId);
+            List<User> usersToAttendanceList = new List<User>();
+
+            foreach(string userId in selectedUsers)
+            {
+                usersToAttendanceList.Add(users.GetUser(userId));
+            }
+            var memoryStream = pdfGeneratorService.pdfAttendanceList(usersToAttendanceList, courseDropdownId);
+            _ = pdfGeneratorService.PushFile(memoryStream, course);
+            return RedirectToAction("Index");
+        }
     }
 }

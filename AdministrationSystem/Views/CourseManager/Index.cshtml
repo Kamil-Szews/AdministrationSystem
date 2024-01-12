@@ -94,6 +94,25 @@
             <div class="mb-2"></div>
             <button type="submit" class="btn btn-primary">Delete</button>
         </form>
+        <form asp-action="AllCourses" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">All courses</label>
+            </div>
+            <div class="form-group">
+                <label>Course name: </label>
+                <ul>
+                    @foreach (var course in Model.AllCourses)
+                    {
+                        string courseDisplay = course.Location + " " +
+                        course.Name + " " + course.Day + " " + course.Time;
+                        <li>@courseDisplay</li>
+                    }
+                </ul>
+            </div>
+
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+        </form>
     </div>
     <div class="col-md-4">
         <form asp-action="ModifyCourse" method="post">

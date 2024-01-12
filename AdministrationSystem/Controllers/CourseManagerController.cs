@@ -91,5 +91,10 @@ namespace AdministrationSystem.Controllers
             courses.DeleteCourse(courseDropdownId);
             return RedirectToAction("Index");
         }
+
+        public IActionResult AllCourses(IndexViewModel model)
+        {
+            return View("Index", model);
+        }
     }
 }
