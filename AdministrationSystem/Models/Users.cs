@@ -1,5 +1,6 @@
 ﻿using AdministrationSystem.Data;
 using Firebase.Auth;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
 
 namespace AdministrationSystem.Models
@@ -27,16 +28,23 @@ namespace AdministrationSystem.Models
 
         public User GetUser(string Id)
         {
-            var client = firebaseConnection.client();
-            var json = client.Get($"Users/{Id}");
-            JObject obj = JObject.Parse(json.Body);
-            string name = (string)obj["Name"];
-            string surname = (string)obj["Surname"];
-            string email = (string)obj["Email"];
-            string phone = (string)obj["Phone"];
-            string courseId = (string)obj["CourseId"];
-            User user = new User(name, surname, email, phone, courseId, Id);
-            return user;
+            if (Id != null && Id != "")
+            {
+                var client = firebaseConnection.client();
+                var json = client.Get($"Users/{Id}");
+                if (json.Body != null && json.Body != "null")
+                {
+                    JObject obj = JObject.Parse(json.Body);
+                    string name = (string)obj["Name"];
+                    string surname = (string)obj["Surname"];
+                    string email = (string)obj["Email"];
+                    string phone = (string)obj["Phone"];
+                    string courseId = (string)obj["CourseId"];
+                    User user = new User(name, surname, email, phone, courseId, Id);
+                    return user;
+                }
+            }
+            return new User();
         }
 
         public List<User> GetAllUsers()

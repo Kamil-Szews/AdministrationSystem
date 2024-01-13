@@ -39,7 +39,7 @@ namespace UnitTests.ModelsTests
             Assert.Equal("15:00 16:00", course.Time);
         }
 
-        // with existent Id
+        // with existing Id
         [Fact]
         public void DeleteCourse1_Test()
         {
@@ -116,7 +116,7 @@ namespace UnitTests.ModelsTests
             // act
             var ListOfCourses = courses.GetAllCourses();
 
-            //assert
+            // assert
             if (ListOfCourses.Count > 0 ) 
             {
                 foreach(var course in ListOfCourses)
