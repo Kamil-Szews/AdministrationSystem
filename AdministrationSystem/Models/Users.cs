@@ -1,4 +1,5 @@
 ﻿using AdministrationSystem.Data;
+using Firebase.Auth;
 using Newtonsoft.Json.Linq;
 
 namespace AdministrationSystem.Models
@@ -59,7 +60,7 @@ namespace AdministrationSystem.Models
             return new List<User>();
         }
 
-        public void AddUserToDatabase(User user)
+        public string AddUserToDatabase(User user)
         {
             var client = firebaseConnection.client();
             if (client != null)
@@ -77,7 +78,9 @@ namespace AdministrationSystem.Models
                 };
                 client.Set($"Users/{UserId}", newUser);
                 user.Id = UserId;
+                return UserId;
             }
+            return "There is no client connection";
         }
 
         public void DeleteUserFromDatabase(string userId)

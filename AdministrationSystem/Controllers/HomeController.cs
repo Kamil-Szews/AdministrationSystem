@@ -38,6 +38,7 @@ namespace AdministrationSystem.Controllers
 
        public IActionResult Index()
         {
+            var x = courses.GetCourse("wakawijnkwai");
             return View();
         }
 

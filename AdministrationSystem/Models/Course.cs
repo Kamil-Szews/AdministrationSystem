@@ -52,16 +52,6 @@ namespace AdministrationSystem.Models
             this.Time = StartingTime + " " + EndingTime;
         }
 
-        public Course(
-            string course
-            )
-        {
-            string[] courseParts = course.Split(' ');
-            this.Location = courseParts[0];
-            this.Day = courseParts[1];
-            this.Time = courseParts[2];
-        }
-
         public string Name { get; set; }
         public string Location { get; set; }
         public string Day { get; set; }

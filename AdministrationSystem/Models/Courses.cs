@@ -24,6 +24,52 @@ namespace AdministrationSystem.Models
         #endregion
 
         #region Methods
+
+        public string AddCourseToDatabase(Course course)
+        {
+            var client = firebaseConnection.client();
+            var JsonCourseId = client.Push("Courses/", "");
+            string courseId = (string)JObject.Parse(JsonCourseId.Body)["name"];
+            var newCourse = new
+            {
+                Name = course.Name,
+                Location = course.Location,
+                Day = course.Day,
+                StartingTime = course.StartingTime,
+                EndingTime = course.EndingTime,
+                Teacher = course.Teacher,
+                Description = course.Description,
+                MembersCount = course.MembersCount,
+                Id = courseId
+            };
+            client.Set($"Courses/{courseId}", newCourse);
+            return courseId;
+        }
+
+        public Course GetCourse(string Id)
+        {
+            if(Id != null && Id !="")
+            {
+                var client = firebaseConnection.client();
+                var json = client.Get($"Courses/{Id}");
+                if(json.Body != null && json.Body != "null")
+                {
+                    JObject obj = JObject.Parse(json.Body);
+                    string name = (string)obj["Name"];
+                    string location = (string)obj["Location"];
+                    string day = (string)obj["Day"];
+                    string startingTime = (string)obj["StartingTime"];
+                    string endingTime = (string)obj["EndingTime"];
+                    string teacher = (string)obj["Teacher"];
+                    string description = (string)obj["Description"];
+                    int membersCount = (int)obj["MembersCount"];
+                    Course course = new Course(name, location, day, startingTime, endingTime, teacher, description, membersCount, Id);
+                    return course;
+                }
+            }
+            return new Course();
+        }
+
         public List<Course> GetAllCourses()
         {
             var client = firebaseConnection.client();
@@ -46,43 +92,6 @@ namespace AdministrationSystem.Models
             return new List<Course>();
         }
 
-        public Course GetCourse(string Id)
-        {
-            var client = firebaseConnection.client();
-            var json = client.Get($"Courses/{Id}");
-            JObject obj = JObject.Parse(json.Body);
-            string name = (string)obj["Name"];
-            string location = (string)obj["Location"];
-            string day = (string)obj["Day"];
-            string startingTime = (string)obj["StartingTime"];
-            string endingTime = (string)obj["EndingTime"];
-            string teacher = (string)obj["Teacher"];
-            string description = (string)obj["Description"];
-            int membersCount = (int)obj["MembersCount"];
-            Course course = new Course(name, location, day, startingTime, endingTime, teacher, description, membersCount, Id);
-            return course;
-        }
-
-        public void AddCourseToDatabase(Course course)
-        {
-            var client = firebaseConnection.client();
-            var JsonCourseId = client.Push("Courses/", "");
-            string courseId = (string)JObject.Parse(JsonCourseId.Body)["name"];
-            var newCourse = new
-            {
-                Name = course.Name,
-                Location = course.Location,
-                Day = course.Day,
-                StartingTime = course.StartingTime,
-                EndingTime = course.EndingTime,
-                Teacher = course.Teacher,
-                Description = course.Description,
-                MembersCount = course.MembersCount,
-                Id = courseId
-            };
-            client.Set($"Courses/{courseId}", newCourse);
-        }
-
         public void ModifyCourse(string courseId, Course newCourse)
         {
             var client = firebaseConnection.client();
@@ -95,6 +104,7 @@ namespace AdministrationSystem.Models
             newCourse.Teacher = newCourse.Teacher == null ? oldCourse.Teacher : newCourse.Teacher;
             newCourse.Description = newCourse.Description == null ? oldCourse.Description : newCourse.Description;
             newCourse.MembersCount = newCourse.MembersCount == null ? oldCourse.MembersCount : newCourse.MembersCount;
+            newCourse.Id = courseId;
             client.Set($"Courses/{courseId}", newCourse);
         }
 
