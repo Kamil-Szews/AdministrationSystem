@@ -1,5 +1,70 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model AdministrationSystem.ViewModels.EmailManagerViewModel.IndexViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="SearchCourse" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Choose your courses</label>
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    @foreach (var course in Model.AllCourses)
+                    {
+                        <div>
+                            <input type="checkbox" id="@course.Id" name="selectedCourses" value="@course.Id">
+                            <label for="@course.Id">@course.Name @course.Location @course.Day @course.Time</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Choose</button>
+        </form>
+        <form asp-action="SendEmail" method="post">
+            <div class="form-group">
+                <label style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Choose your receivers</label>
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    @if(Model.SelectedCourses != null)
+                    {
+                        @foreach (var course in Model.SelectedCourses)
+                        {
+                            <div>
+                                <label style="font-size: 15px; font-weight: bold;">Course @course.Name @course.Location @course.Day @course.Time</label>
+                                @foreach (var user in Model.AllUsers)
+                                {
+                                    if (course.Id == user.CourseId)
+                                    {
+                                        <div>
+                                            <input type="checkbox" id="@user.Id" name="selectedUsers" value="@user.Id" checked>
+                                            <label for="@user.Id">@user.Name @user.Surname</label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="subjectText">Subject:</label>
+                <textarea id="subjectText" name="subjectText" rows="1" cols="50" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="messageText">Message:</label>
+                <textarea id="messageText" name="messageText" rows="10" cols="50" class="form-control"></textarea>
+            </div>
+
+            <div class="mb-2"></div>
+            <div class="mb-2"></div>
+            <button type="submit" class="btn btn-primary">Send email</button>
+        </form>
+    </div>
+</div>

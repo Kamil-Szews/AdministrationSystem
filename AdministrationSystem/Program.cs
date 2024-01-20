@@ -4,19 +4,25 @@ using AdministrationSystem.Models;
 using AdministrationSystem.ViewModels.UsersManagerViewModel;
 using AdministrationSystem.Services;
 using QuestPDF.Infrastructure;
+using AdministrationSystem.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+#region DependencyInjection
 
 // Licenses
 QuestPDF.Settings.License = LicenseType.Community;
 
-#region Services
+// Services
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddSingleton<PdfGeneratorService>();
 
 // Controllers and Views
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<PdfGeneratorService>();
 
 // Models
+builder.Services.AddSingleton<Admin>();
 builder.Services.AddSingleton<Users>();
 builder.Services.AddSingleton<User>();
 builder.Services.AddSingleton<Courses>();

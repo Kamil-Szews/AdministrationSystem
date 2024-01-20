@@ -1,5 +1,4 @@
 ﻿using AdministrationSystem.Data;
-using Firebase.Auth;
 using Newtonsoft.Json.Linq;
 
 namespace AdministrationSystem.Models
