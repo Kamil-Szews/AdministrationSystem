@@ -112,7 +112,7 @@ namespace AdministrationSystem.Models
             var client = firebaseConnection.client();
             client.Delete($"Courses/{courseId}");
         }
-
+        
         #endregion
     }
 }
