@@ -26,7 +26,7 @@ namespace AdministrationSystem.Models
 
         #region Methods
 
-        public User GetUser(string Id)
+        public User Get(string Id)
         {
             if (Id != null && Id != "")
             {
@@ -47,7 +47,7 @@ namespace AdministrationSystem.Models
             return new User();
         }
 
-        public List<User> GetAllUsers()
+        public List<User> GetAll()
         {
             var client = firebaseConnection.client();
             var json = client.Get("Users/");
@@ -59,7 +59,7 @@ namespace AdministrationSystem.Models
                 foreach (var nextUser in obj)
                 {
                     string Id = nextUser.Key;
-                    User user = GetUser(Id);
+                    User user = Get(Id);
                     allUsers.Add(user);
                 }
 
@@ -68,7 +68,7 @@ namespace AdministrationSystem.Models
             return new List<User>();
         }
 
-        public string AddUserToDatabase(User user)
+        public string Add(User user)
         {
             var client = firebaseConnection.client();
             if (client != null)
@@ -91,7 +91,7 @@ namespace AdministrationSystem.Models
             return "There is no client connection";
         }
 
-        public void DeleteUserFromDatabase(string userId)
+        public void Delete(string userId)
         {
             var client = firebaseConnection.client();
             if (client != null)
@@ -100,10 +100,10 @@ namespace AdministrationSystem.Models
             }
         }
 
-        public void ModifyUser(string userId, User newUser)
+        public void Modify(string userId, User newUser)
         {
             var client = firebaseConnection.client();
-            User oldUser = GetUser(userId);
+            User oldUser = Get(userId);
             newUser.Name = newUser.Name == null ? oldUser.Name : newUser.Name;
             newUser.Surname = newUser.Surname == null ? oldUser.Surname : newUser.Surname;
             newUser.Email = newUser.Email == null ? oldUser.Email : newUser.Email;

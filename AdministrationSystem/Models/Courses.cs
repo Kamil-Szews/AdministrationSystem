@@ -24,7 +24,7 @@ namespace AdministrationSystem.Models
 
         #region Methods
 
-        public string AddCourseToDatabase(Course course)
+        public string Add(Course course)
         {
             var client = firebaseConnection.client();
             var JsonCourseId = client.Push("Courses/", "");
@@ -45,7 +45,7 @@ namespace AdministrationSystem.Models
             return courseId;
         }
 
-        public Course GetCourse(string Id)
+        public Course Get(string Id)
         {
             if(Id != null && Id !="")
             {
@@ -69,7 +69,7 @@ namespace AdministrationSystem.Models
             return new Course();
         }
 
-        public List<Course> GetAllCourses()
+        public List<Course> GetAll()
         {
             var client = firebaseConnection.client();
             var json = client.Get("Courses/");
@@ -82,7 +82,7 @@ namespace AdministrationSystem.Models
                 foreach (var nextUser in obj)
                 {
                     string Id = nextUser.Key;
-                    Course course = GetCourse(Id);
+                    Course course = Get(Id);
                     allCourses.Add(course);
                 }
 
@@ -91,10 +91,10 @@ namespace AdministrationSystem.Models
             return new List<Course>();
         }
 
-        public void ModifyCourse(string courseId, Course newCourse)
+        public void Modify(string courseId, Course newCourse)
         {
             var client = firebaseConnection.client();
-            Course oldCourse = GetCourse(courseId);
+            Course oldCourse = Get(courseId);
             newCourse.Name = newCourse.Name == null ? oldCourse.Name : newCourse.Name;
             newCourse.Location = newCourse.Location == null ? oldCourse.Location : newCourse.Location;
             newCourse.Day = newCourse.Day == null ? oldCourse.Day : newCourse.Day;
@@ -107,7 +107,7 @@ namespace AdministrationSystem.Models
             client.Set($"Courses/{courseId}", newCourse);
         }
 
-        public void DeleteCourse(string courseId)
+        public void Delete(string courseId)
         {
             var client = firebaseConnection.client();
             client.Delete($"Courses/{courseId}");

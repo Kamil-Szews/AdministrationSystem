@@ -7,8 +7,8 @@ namespace AdministrationSystem.Data
     {
         private IFirebaseConfig? config()
         {
-            string authSecret = "pyfh6tC0C3KKXhqfnu7T2LKmpt4Ptq6OuzDGQnW7";
-            string basePath = "https://tigerbytes-2ffa5-default-rtdb.europe-west1.firebasedatabase.app";
+            string authSecret = "1rNPiorl7UmteenAYmKMlUzh3z5TB08RDRE8JmHB";
+            string basePath = "https://courses-shop-web-application-default-rtdb.europe-west1.firebasedatabase.app";
             
             try
             {

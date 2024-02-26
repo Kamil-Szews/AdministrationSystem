@@ -38,7 +38,7 @@ namespace AdministrationSystem.Controllers
 
        public IActionResult Index()
         {
-            var x = courses.GetCourse("wakawijnkwai");
+            var x = courses.Get("wakawijnkwai");
             return View();
         }
 

@@ -25,21 +25,21 @@ namespace AdministrationSystem.Controllers
         public IActionResult Index()
         {
             var model = new IndexViewModel();
-            model.AllCourses = courses.GetAllCourses(); 
+            model.AllCourses = courses.GetAll(); 
             return View("Index", model);
         }
 
         [HttpPost]
         public IActionResult SearchCourse(IndexViewModel model, List<string> selectedCourses)
         {
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
 
             foreach(var courseId in selectedCourses)
             {
-                model.SelectedCourses.Add(courses.GetCourse(courseId));
+                model.SelectedCourses.Add(courses.Get(courseId));
             }
 
-            model.AllUsers = users.GetAllUsers()
+            model.AllUsers = users.GetAll()
                 .Where(user => model.SelectedCourses
                 .Any(course => course.Id == user.CourseId))
                 .Distinct()
@@ -50,11 +50,11 @@ namespace AdministrationSystem.Controllers
 
         public async Task<IActionResult> SendEmail(IndexViewModel model, List<string> selectedUsers, string subjectText, string messageText)
         {
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
 
             foreach(var userId in selectedUsers)
             {
-                var user = users.GetUser(userId);
+                var user = users.Get(userId);
                 await emailSender.SendEmailAsync(user.Email, subjectText, messageText);
             }
 

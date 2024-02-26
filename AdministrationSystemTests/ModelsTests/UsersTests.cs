@@ -16,7 +16,7 @@ namespace UnitTests.ModelsTests
             // arrange
             FirebaseConnection firebaseConnection = new FirebaseConnection();
             Users users = new Users(firebaseConnection);
-            var userId = users.AddUserToDatabase(new User()
+            var userId = users.Add(new User()
             {
                 Name = "TestName",
                 Surname = "TestSurname",
@@ -26,8 +26,8 @@ namespace UnitTests.ModelsTests
             });
 
             // act
-            User user = users.GetUser(userId);
-            users.DeleteUserFromDatabase(userId);
+            User user = users.Get(userId);
+            users.Delete(userId);
 
             // assert
             Assert.Equal(userId, user.Id);
@@ -53,11 +53,11 @@ namespace UnitTests.ModelsTests
                 Phone = "TestPhone",
                 CourseId = "TestCourseId"
             };
-            var userId = users.AddUserToDatabase(testUser);
+            var userId = users.Add(testUser);
 
             // act
-            users.DeleteUserFromDatabase(userId);
-            User user = users.GetUser(userId);
+            users.Delete(userId);
+            User user = users.Get(userId);
 
             // assert
             Assert.Null(user.Id);
@@ -79,7 +79,7 @@ namespace UnitTests.ModelsTests
             // act
             try
             {
-                users.DeleteUserFromDatabase("There once was a ship");
+                users.Delete("There once was a ship");
             }
             
             // assert
@@ -95,7 +95,7 @@ namespace UnitTests.ModelsTests
             // arrange
             FirebaseConnection firebaseConnection = new FirebaseConnection();
             Users users = new Users(firebaseConnection);
-            var userId = users.AddUserToDatabase(new User()
+            var userId = users.Add(new User()
             {
                 Name = "TestName",
                 Surname = "TestSurname",
@@ -105,25 +105,25 @@ namespace UnitTests.ModelsTests
             });
 
             // act
-            var ListOfUsers = users.GetAllUsers();
+            var ListOfUsers = users.GetAll();
 
             // assert
             if(ListOfUsers.Count > 0) 
             {
                 foreach(var user in ListOfUsers)
                 {
-                    User tempUser = users.GetUser(user.Id);
+                    User tempUser = users.Get(user.Id);
                     if(tempUser.Id == null || tempUser.Id == "null")
                     {
-                        users.DeleteUserFromDatabase(userId);
+                        users.Delete(userId);
                         Assert.Fail("");
                     }
                 }
-                users.DeleteUserFromDatabase(userId);
+                users.Delete(userId);
             }
             else
             {
-                users.DeleteUserFromDatabase(userId);
+                users.Delete(userId);
                 Assert.Fail("");
             }
         }
@@ -134,7 +134,7 @@ namespace UnitTests.ModelsTests
             // arrange
             FirebaseConnection firebaseConnection = new FirebaseConnection();
             Users users = new Users(firebaseConnection);
-            var userId = users.AddUserToDatabase(new User()
+            var userId = users.Add(new User()
             {
                 Name = "TestName",
                 Surname = "TestSurname",
@@ -152,9 +152,9 @@ namespace UnitTests.ModelsTests
             };
 
             // act
-            users.ModifyUser(userId, newUser);
-            var user = users.GetUser(userId);
-            users.DeleteUserFromDatabase(userId);
+            users.Modify(userId, newUser);
+            var user = users.Get(userId);
+            users.Delete(userId);
 
             // assert
             Assert.Equal(userId, user.Id);

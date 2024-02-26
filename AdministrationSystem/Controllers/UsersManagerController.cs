@@ -29,7 +29,7 @@ namespace AdministrationSystem.Controllers
         public IActionResult Index()
         {
             var model = new IndexViewModel();
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
             model.AllCoursesNames = model.AllCourses
                 .Select(course => course.Name)
                 .Distinct()
@@ -38,7 +38,7 @@ namespace AdministrationSystem.Controllers
                 .Select(course => course.Location)
                 .Distinct()
                 .ToList();
-            model.AllUsers = users.GetAllUsers();
+            model.AllUsers = users.GetAll();
             return View("Index", model);
         }
 
@@ -47,7 +47,7 @@ namespace AdministrationSystem.Controllers
         {
             model.CourseNameInputText = courseDropdownName;
             model.LocationInputText = courseDropdownLocation;
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
             model.AllCoursesNames = model.AllCourses
                 .Select(course => course.Name)
                 .Distinct()
@@ -56,7 +56,7 @@ namespace AdministrationSystem.Controllers
                 .Select(course => course.Location)
                 .Distinct()
                 .ToList();
-            model.AllUsers = users.GetAllUsers();
+            model.AllUsers = users.GetAll();
             model.InputCourses = model.AllCourses
                 .Where(course => course.Name == courseDropdownName && course.Location == courseDropdownLocation)
                 .ToList();
@@ -66,7 +66,7 @@ namespace AdministrationSystem.Controllers
         [HttpPost]
         public IActionResult AddUser(IndexViewModel model, string courseDropdownId)
         {
-            users.AddUserToDatabase(new User(
+            users.Add(new User(
                 model.NameInputText,
                 model.SurnameInputText,
                 model.EmailInputText,
@@ -87,14 +87,14 @@ namespace AdministrationSystem.Controllers
                 Phone = model.PhoneInputText != null ? model.PhoneInputText : null,
                 CourseId = courseDropdownId
             };
-            users.ModifyUser(DropdownUserId, newUser);
+            users.Modify(DropdownUserId, newUser);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult DeleteUser(string courseDropdownUserId)
         {
-            users.DeleteUserFromDatabase(courseDropdownUserId);
+            users.Delete(courseDropdownUserId);
             return RedirectToAction("Index");
         }
     }

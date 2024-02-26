@@ -23,7 +23,7 @@ namespace AdministrationSystem.Controllers
         public IActionResult Index()
         {
             var model = new IndexViewModel();
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
             model.AllCoursesNames = model.AllCourses
                 .Select(course => course.Name)
                 .Distinct()
@@ -38,7 +38,7 @@ namespace AdministrationSystem.Controllers
         [HttpPost]
         public IActionResult AddCourse(IndexViewModel model)
         {
-            courses.AddCourseToDatabase(new Course(
+            courses.Add(new Course(
                 model.NameInput,
                 model.LocationInput,
                 model.DayInput,
@@ -56,7 +56,7 @@ namespace AdministrationSystem.Controllers
         {
             model.NameInput = courseDropdownName;
             model.LocationInput = courseDropdownLocation;
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
             model.AllCoursesNames = model.AllCourses
                 .Select(course => course.Name)
                 .Distinct()
@@ -82,13 +82,13 @@ namespace AdministrationSystem.Controllers
                 Description = model.DescriptionInput != null ? model.DescriptionInput : null,
                 MembersCount = model.MembersCountInput != null ? model.MembersCountInput : null
             };
-            courses.ModifyCourse(courseDropdownId, modifiedCourse);
+            courses.Modify(courseDropdownId, modifiedCourse);
             return RedirectToAction("Index");
         }
 
         public IActionResult DeleteCourse(string courseDropdownId)
         {
-            courses.DeleteCourse(courseDropdownId);
+            courses.Delete(courseDropdownId);
             return RedirectToAction("Index");
         }
 

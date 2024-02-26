@@ -26,16 +26,16 @@ namespace AdministrationSystem.Controllers
         public IActionResult Index()
         {
             var model = new IndexViewModel();
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
             return View("Index", model);
         }
 
         [HttpPost]
         public IActionResult SearchCourse(IndexViewModel model, string courseDropdownId)
         {
-            model.AllCourses = courses.GetAllCourses();
+            model.AllCourses = courses.GetAll();
             model.DropCourseId = courseDropdownId;
-            model.ChoosenUsers = users.GetAllUsers()
+            model.ChoosenUsers = users.GetAll()
                 .Where(user => user.CourseId == courseDropdownId)
                 .ToList();
             TempData["courseDropdownId"] = courseDropdownId;
@@ -46,12 +46,12 @@ namespace AdministrationSystem.Controllers
         public IActionResult GenerateAttedanceList(IndexViewModel model, List<string> selectedUsers)
         {
             string courseDropdownId = TempData["courseDropdownId"] as string;
-            Course course = courses.GetCourse(courseDropdownId);
+            Course course = courses.Get(courseDropdownId);
             List<User> usersToAttendanceList = new List<User>();
 
             foreach(string userId in selectedUsers)
             {
-                usersToAttendanceList.Add(users.GetUser(userId));
+                usersToAttendanceList.Add(users.Get(userId));
             }
             var memoryStream = pdfGeneratorService.pdfAttendanceList(usersToAttendanceList, courseDropdownId);
             _ = pdfGeneratorService.PushFile(memoryStream, course);

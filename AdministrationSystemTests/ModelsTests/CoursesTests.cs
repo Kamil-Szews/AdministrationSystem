@@ -13,7 +13,7 @@ namespace UnitTests.ModelsTests
             var courses = new Courses(firebaseConnection);
 
             // act
-            string courseId = courses.AddCourseToDatabase(new Course
+            string courseId = courses.Add(new Course
             {
                 Name = "TestCourse",
                 Location = "ChinaTown",
@@ -24,8 +24,8 @@ namespace UnitTests.ModelsTests
                 Description = "Great test course",
                 MembersCount = 15
             });
-            var course = courses.GetCourse(courseId);
-            courses.DeleteCourse(courseId);
+            var course = courses.Get(courseId);
+            courses.Delete(courseId);
 
             // assert
             Assert.Equal("TestCourse", course.Name);
@@ -46,7 +46,7 @@ namespace UnitTests.ModelsTests
             // arrange
             var firebaseConnection = new FirebaseConnection();
             var courses = new Courses(firebaseConnection);
-            string courseId = courses.AddCourseToDatabase(new Course
+            string courseId = courses.Add(new Course
             {
                 Name = "TestCourse",
                 Location = "ChinaTown",
@@ -59,8 +59,8 @@ namespace UnitTests.ModelsTests
             });
 
             // act
-            courses.DeleteCourse(courseId);
-            var course = courses.GetCourse(courseId);
+            courses.Delete(courseId);
+            var course = courses.Get(courseId);
 
             // assert
             Assert.Null(course.Name);
@@ -85,7 +85,7 @@ namespace UnitTests.ModelsTests
             // act
             try
             {
-                courses.DeleteCourse("HelloItsMe");
+                courses.Delete("HelloItsMe");
             }
 
             // assert
@@ -101,7 +101,7 @@ namespace UnitTests.ModelsTests
             // arrange
             var firebaseConnection = new FirebaseConnection();
             var courses = new Courses(firebaseConnection);
-            string courseId = courses.AddCourseToDatabase(new Course
+            string courseId = courses.Add(new Course
             {
                 Name = "TestCourse",
                 Location = "ChinaTown",
@@ -114,25 +114,25 @@ namespace UnitTests.ModelsTests
             });
 
             // act
-            var ListOfCourses = courses.GetAllCourses();
+            var ListOfCourses = courses.GetAll();
 
             // assert
             if (ListOfCourses.Count > 0 ) 
             {
                 foreach(var course in ListOfCourses)
                 {
-                    Course tempCourse = courses.GetCourse(course.Id);
+                    Course tempCourse = courses.Get(course.Id);
                     if(tempCourse.Id == null || tempCourse.Id == "null")
                     {
-                        courses.DeleteCourse(courseId);
+                        courses.Delete(courseId);
                         Assert.Fail("");
                     }
                 }
-                courses.DeleteCourse(courseId);
+                courses.Delete(courseId);
             }
             else
             {
-                courses.DeleteCourse(courseId);
+                courses.Delete(courseId);
                 Assert.Fail("");
             }
         }
@@ -143,7 +143,7 @@ namespace UnitTests.ModelsTests
             // arrange
             var firebaseConnection = new FirebaseConnection();
             var courses = new Courses(firebaseConnection);
-            string courseId = courses.AddCourseToDatabase(new Course
+            string courseId = courses.Add(new Course
             {
                 Name = "TestCourse",
                 Location = "ChinaTown",
@@ -167,9 +167,9 @@ namespace UnitTests.ModelsTests
             };
 
             // act
-            courses.ModifyCourse(courseId, newCourse);
-            var course = courses.GetCourse(courseId);
-            courses.DeleteCourse(courseId);
+            courses.Modify(courseId, newCourse);
+            var course = courses.Get(courseId);
+            courses.Delete(courseId);
 
             // assert
             Assert.Equal("TestCourseNew", course.Name);

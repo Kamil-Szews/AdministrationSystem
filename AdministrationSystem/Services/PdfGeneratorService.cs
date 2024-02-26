@@ -19,7 +19,7 @@ namespace AdministrationSystem.Services
         public MemoryStream pdfAttendanceList(List<User> users, string courseId)
         {
             var stream = new MemoryStream();
-            Course course = courses.GetCourse(courseId);
+            Course course = courses.Get(courseId);
 
             Document.Create(container =>
             {
