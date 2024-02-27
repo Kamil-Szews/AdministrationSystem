@@ -1,9 +1,10 @@
 ﻿using AdministrationSystem.Data;
+using AdministrationSystem.Interfaces;
 using Newtonsoft.Json.Linq;
 
 namespace AdministrationSystem.Models
 {
-    public class Courses
+    public class Courses : IDatabaseOperations<Course>
     {
         #region Constructors
 
@@ -24,33 +25,13 @@ namespace AdministrationSystem.Models
 
         #region Methods
 
-        public string Add(Course course)
-        {
-            var client = firebaseConnection.client();
-            var JsonCourseId = client.Push("Courses/", "");
-            string courseId = (string)JObject.Parse(JsonCourseId.Body)["name"];
-            var newCourse = new
-            {
-                Name = course.Name,
-                Location = course.Location,
-                Day = course.Day,
-                StartingTime = course.StartingTime,
-                EndingTime = course.EndingTime,
-                Teacher = course.Teacher,
-                Description = course.Description,
-                MembersCount = course.MembersCount,
-                Id = courseId
-            };
-            client.Set($"Courses/{courseId}", newCourse);
-            return courseId;
-        }
-
         public Course Get(string Id)
         {
             if(Id != null && Id !="")
             {
                 var client = firebaseConnection.client();
                 var json = client.Get($"Courses/{Id}");
+                
                 if(json.Body != null && json.Body != "null")
                 {
                     JObject obj = JObject.Parse(json.Body);
@@ -89,6 +70,27 @@ namespace AdministrationSystem.Models
                 return allCourses;
             }
             return new List<Course>();
+        }
+
+        public string Add(Course course)
+        {
+            var client = firebaseConnection.client();
+            var JsonCourseId = client.Push("Courses/", "");
+            string courseId = (string)JObject.Parse(JsonCourseId.Body)["name"];
+            var newCourse = new
+            {
+                Name = course.Name,
+                Location = course.Location,
+                Day = course.Day,
+                StartingTime = course.StartingTime,
+                EndingTime = course.EndingTime,
+                Teacher = course.Teacher,
+                Description = course.Description,
+                MembersCount = course.MembersCount,
+                Id = courseId
+            };
+            client.Set($"Courses/{courseId}", newCourse);
+            return courseId;
         }
 
         public void Modify(string courseId, Course newCourse)

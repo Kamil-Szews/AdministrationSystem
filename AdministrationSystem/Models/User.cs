@@ -12,24 +12,6 @@
             string surname,
             string email,
             string phone,
-            string courseId
-        )
-        {
-            this.Name = name;
-            this.Surname = surname;
-            this.Email = email;
-            this.Phone = phone;
-            this.CourseId = courseId;
-            Id = "";
-
-        }
-
-        public User
-        (
-            string name,
-            string surname,
-            string email,
-            string phone,
             string courseId,
             string id
         )

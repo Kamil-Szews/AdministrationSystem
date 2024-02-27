@@ -16,7 +16,7 @@ namespace AdministrationSystem.Controllers
 
         #region Properties
 
-        public Courses courses;
+        private readonly Courses courses;
 
         #endregion
 

@@ -1,5 +1,4 @@
-﻿
-namespace AdministrationSystem.Models
+﻿namespace AdministrationSystem.Models
 {
     public class Course
     {

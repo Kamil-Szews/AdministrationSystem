@@ -1,11 +1,10 @@
 ﻿using AdministrationSystem.Data;
-using Firebase.Auth;
-using Microsoft.AspNet.Identity;
+using AdministrationSystem.Interfaces;
 using Newtonsoft.Json.Linq;
 
 namespace AdministrationSystem.Models
 {
-    public class Users
+    public class Users : IDatabaseOperations<User>
     {
         #region Constructors
 
@@ -62,7 +61,6 @@ namespace AdministrationSystem.Models
                     User user = Get(Id);
                     allUsers.Add(user);
                 }
-
                 return allUsers;
             }
             return new List<User>();
@@ -91,15 +89,6 @@ namespace AdministrationSystem.Models
             return "There is no client connection";
         }
 
-        public void Delete(string userId)
-        {
-            var client = firebaseConnection.client();
-            if (client != null)
-            {
-                client.Delete($"Users/{userId}");
-            }
-        }
-
         public void Modify(string userId, User newUser)
         {
             var client = firebaseConnection.client();
@@ -110,6 +99,16 @@ namespace AdministrationSystem.Models
             newUser.Phone = newUser.Phone == null ? oldUser.Phone : newUser.Phone;
             newUser.CourseId = newUser.CourseId == null ? oldUser.CourseId : newUser.CourseId;
             client.Set($"Users/{userId}", newUser);
+        }
+
+        public void Delete(string userId)
+        {
+            var client = firebaseConnection.client();
+
+            if (client != null)
+            {
+                client.Delete($"Users/{userId}");
+            }
         }
 
         #endregion

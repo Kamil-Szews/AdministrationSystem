@@ -21,8 +21,8 @@ namespace AdministrationSystem.Controllers
 
         #region Properties
         
-        private Users users;
-        private Courses courses;
+        private readonly Users users;
+        private readonly Courses courses;
         
         #endregion
 
@@ -71,7 +71,8 @@ namespace AdministrationSystem.Controllers
                 model.SurnameInputText,
                 model.EmailInputText,
                 model.PhoneInputText,
-                courseDropdownId
+                courseDropdownId,
+                ""
                 ));
             return RedirectToAction("Index");
         }
